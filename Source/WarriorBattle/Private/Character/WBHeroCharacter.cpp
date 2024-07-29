@@ -1,12 +1,14 @@
 ﻿// Fillipe Romero - All Rights Reserved
 
 #include "Character/WBHeroCharacter.h"
+
 #include "EnhancedInputSubsystems.h"
 #include "WBGameplayTags.h"
 #include "Camera/CameraComponent.h"
 #include "Component/Input/WBInputComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "DataAsset/Input/DataAsset_InputConfig.h"
+#include "DataAsset/StartUpData/DataAsset_BaseStartUpData.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 
@@ -53,6 +55,20 @@ void AWBHeroCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 void AWBHeroCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+}
+
+void AWBHeroCharacter::PossessedBy(AController* NewController)
+{
+	Super::PossessedBy(NewController);
+
+	// We need to use IsNull in this case since it's a soft pointer
+	if (!CharacterStartUpData.IsNull())
+	{
+		if (UDataAsset_BaseStartUpData* LoadedData = CharacterStartUpData.LoadSynchronous())
+		{
+			LoadedData->GiveToAbilitySystemComponent(WBAbilitySystemComponent);
+		}
+	}
 }
 
 void AWBHeroCharacter::Input_Move(const FInputActionValue& InputActionValue)

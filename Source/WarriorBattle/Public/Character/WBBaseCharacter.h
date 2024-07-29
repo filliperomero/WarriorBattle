@@ -7,6 +7,7 @@
 #include "GameFramework/Character.h"
 #include "WBBaseCharacter.generated.h"
 
+class UDataAsset_BaseStartUpData;
 class UWBAttributeSet;
 class UWBAbilitySystemComponent;
 
@@ -27,6 +28,9 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, Category = "Ability System")
 	TObjectPtr<UWBAttributeSet> WBAttributeSet;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Character Data")
+	TSoftObjectPtr<UDataAsset_BaseStartUpData> CharacterStartUpData;
 
 public:
 	FORCEINLINE UWBAbilitySystemComponent* GetWBAbilitySystemComponent() const { return WBAbilitySystemComponent; }

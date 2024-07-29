@@ -28,5 +28,7 @@ void AWBBaseCharacter::PossessedBy(AController* NewController)
 	if (IsValid(WBAbilitySystemComponent))
 	{
 		WBAbilitySystemComponent->InitAbilityActorInfo(this, this);
+
+		ensureMsgf(!CharacterStartUpData.IsNull(), TEXT("StartUp Data not assigned to %s"), *GetName());
 	}
 }
