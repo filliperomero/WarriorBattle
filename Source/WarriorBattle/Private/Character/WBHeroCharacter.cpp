@@ -5,6 +5,7 @@
 #include "EnhancedInputSubsystems.h"
 #include "WBGameplayTags.h"
 #include "Camera/CameraComponent.h"
+#include "Component/Combat/HeroCombatComponent.h"
 #include "Component/Input/WBInputComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "DataAsset/Input/DataAsset_InputConfig.h"
@@ -34,6 +35,8 @@ AWBHeroCharacter::AWBHeroCharacter()
 	FollowCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("FollowCamera"));
 	FollowCamera->SetupAttachment(CameraBoom, USpringArmComponent::SocketName);
 	FollowCamera->bUsePawnControlRotation = false;
+
+	HeroCombatComponent = CreateDefaultSubobject<UHeroCombatComponent>(TEXT("HeroCombatComponent"));
 }
 
 void AWBHeroCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)

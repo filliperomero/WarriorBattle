@@ -6,6 +6,7 @@
 #include "WBBaseCharacter.h"
 #include "WBHeroCharacter.generated.h"
 
+class UHeroCombatComponent;
 struct FInputActionValue;
 class UDataAsset_InputConfig;
 class UCameraComponent;
@@ -34,6 +35,9 @@ private:
 	UPROPERTY(VisibleAnywhere, Category = Camera)
 	TObjectPtr<UCameraComponent> FollowCamera;
 
+	UPROPERTY(VisibleAnywhere, Category = Combat)
+	TObjectPtr<UHeroCombatComponent> HeroCombatComponent;
+
 #pragma endregion
 	
 #pragma region Inputs
@@ -45,4 +49,7 @@ private:
 	void Input_Look(const FInputActionValue& InputActionValue);
 
 #pragma endregion
+
+public:
+	FORCEINLINE UHeroCombatComponent* GetHeroCombatComponent() const { return HeroCombatComponent; }
 };
