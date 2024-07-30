@@ -1,6 +1,6 @@
 ﻿// Fillipe Romero - All Rights Reserved
 
-#include "Character/WBHeroAnimInstance.h"
+#include "Character/Animation/WBHeroAnimInstance.h"
 #include "Character/WBBaseCharacter.h"
 #include "Character/WBHeroCharacter.h"
 

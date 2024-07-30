@@ -1,6 +1,6 @@
 ﻿// Fillipe Romero - All Rights Reserved
 
-#include "Character/WBCharacterAnimInstance.h"
+#include "Character/Animation/WBCharacterAnimInstance.h"
 #include "Character/WBBaseCharacter.h"
 #include "GameFramework/CharacterMovementComponent.h"
 
