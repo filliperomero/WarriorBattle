@@ -4,6 +4,7 @@
 
 #include "EnhancedInputSubsystems.h"
 #include "WBGameplayTags.h"
+#include "AbilitySystem/WBAbilitySystemComponent.h"
 #include "Camera/CameraComponent.h"
 #include "Component/Combat/HeroCombatComponent.h"
 #include "Component/Input/WBInputComponent.h"
@@ -52,6 +53,8 @@ void AWBHeroCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 
 		InputComp->BindNativeInputAction(InputConfigDataAsset, WBGameplayTags::InputTag_Move, ETriggerEvent::Triggered, this, &ThisClass::Input_Move);
 		InputComp->BindNativeInputAction(InputConfigDataAsset, WBGameplayTags::InputTag_Look, ETriggerEvent::Triggered, this, &ThisClass::Input_Look);
+
+		InputComp->BindAbilityInputAction(InputConfigDataAsset, this, &ThisClass::Input_AbilityInputPressed, &ThisClass::Input_AbilityInputReleased);
 	}
 }
 
@@ -92,4 +95,14 @@ void AWBHeroCharacter::Input_Look(const FInputActionValue& InputActionValue)
 
 	AddControllerYawInput(LookAxisVector.X);
 	AddControllerPitchInput(LookAxisVector.Y);
+}
+
+void AWBHeroCharacter::Input_AbilityInputPressed(FGameplayTag InInputTag)
+{
+	WBAbilitySystemComponent->OnAbilityInputPressed(InInputTag);
+}
+
+void AWBHeroCharacter::Input_AbilityInputReleased(FGameplayTag InInputTag)
+{
+	WBAbilitySystemComponent->OnAbilityInputReleased(InInputTag);
 }

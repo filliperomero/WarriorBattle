@@ -29,4 +29,7 @@ protected:
 
 	UFUNCTION(BlueprintPure, Category = "WarriorBattle|Ability")
 	UPawnCombatComponent* GetPawnCombatComponentFromActorInfo() const;
+
+	UFUNCTION(BlueprintPure, Category = "WarriorBattle|Ability")
+	UWBAbilitySystemComponent* GetWBAbilitySystemComponentFromActorInfo() const;
 };

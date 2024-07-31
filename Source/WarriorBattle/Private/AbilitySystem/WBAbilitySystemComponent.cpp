@@ -2,18 +2,18 @@
 
 #include "AbilitySystem/WBAbilitySystemComponent.h"
 
-UWBAbilitySystemComponent::UWBAbilitySystemComponent()
+void UWBAbilitySystemComponent::OnAbilityInputPressed(const FGameplayTag& InInputTag)
 {
-	PrimaryComponentTick.bCanEverTick = true;
+	if (!InInputTag.IsValid()) return;
+
+	for (const FGameplayAbilitySpec& AbilitySpec : GetActivatableAbilities())
+	{
+		if (!AbilitySpec.DynamicAbilityTags.HasTagExact(InInputTag)) continue;
+
+		TryActivateAbility(AbilitySpec.Handle);
+	}
 }
 
-void UWBAbilitySystemComponent::BeginPlay()
+void UWBAbilitySystemComponent::OnAbilityInputReleased(const FGameplayTag& InInputTag)
 {
-	Super::BeginPlay();
 }
-
-void UWBAbilitySystemComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
-{
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-}
-

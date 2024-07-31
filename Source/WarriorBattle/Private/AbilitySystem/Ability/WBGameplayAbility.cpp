@@ -3,6 +3,7 @@
 #include "AbilitySystem/Ability/WBGameplayAbility.h"
 
 #include "AbilitySystemComponent.h"
+#include "AbilitySystem/WBAbilitySystemComponent.h"
 #include "Component/Combat/PawnCombatComponent.h"
 
 void UWBGameplayAbility::OnGiveAbility(const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilitySpec& Spec)
@@ -35,4 +36,9 @@ UPawnCombatComponent* UWBGameplayAbility::GetPawnCombatComponentFromActorInfo() 
 {
 	// It's not the most performant. We can improve if needed
 	return GetAvatarActorFromActorInfo()->FindComponentByClass<UPawnCombatComponent>();
+}
+
+UWBAbilitySystemComponent* UWBGameplayAbility::GetWBAbilitySystemComponentFromActorInfo() const
+{
+	return Cast<UWBAbilitySystemComponent>(CurrentActorInfo->AbilitySystemComponent);
 }

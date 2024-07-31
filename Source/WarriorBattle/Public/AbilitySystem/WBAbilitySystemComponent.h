@@ -12,11 +12,6 @@ class WARRIORBATTLE_API UWBAbilitySystemComponent : public UAbilitySystemCompone
 	GENERATED_BODY()
 
 public:
-	UWBAbilitySystemComponent();
-
-protected:
-	virtual void BeginPlay() override;
-
-public:
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+	void OnAbilityInputPressed(const FGameplayTag& InInputTag);
+	void OnAbilityInputReleased(const FGameplayTag& InInputTag);
 };
