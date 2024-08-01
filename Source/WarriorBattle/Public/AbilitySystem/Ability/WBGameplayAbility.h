@@ -6,6 +6,7 @@
 #include "Abilities/GameplayAbility.h"
 #include "WBGameplayAbility.generated.h"
 
+class UWBAbilitySystemComponent;
 class UPawnCombatComponent;
 
 UENUM(BlueprintType)

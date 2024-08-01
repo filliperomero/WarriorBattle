@@ -5,11 +5,6 @@
 #include "AbilitySystem/WBAbilitySystemComponent.h"
 #include "AbilitySystem/Ability/WBGameplayAbility.h"
 
-bool FWBHeroAbilitySet::IsValid() const
-{
-	return InputTag.IsValid() && AbilityToGrant;
-}
-
 void UDataAsset_HeroStartUpData::GiveToAbilitySystemComponent(UWBAbilitySystemComponent* InASCToGive, int32 ApplyLevel)
 {
 	Super::GiveToAbilitySystemComponent(InASCToGive, ApplyLevel);
