@@ -1,3 +1,3 @@
 ﻿// Fillipe Romero - All Rights Reserved
 
-#include "Item/Weapon/WBHeroWeapon.h"
+#include "Types/WBStructTypes.h"

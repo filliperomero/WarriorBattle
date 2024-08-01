@@ -24,12 +24,12 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "WarriorBattle|Combat")
 	AWBBaseWeapon* GetCharacterCurrentEquippedWeapon() const;
 
+	UPROPERTY(BlueprintReadWrite, Category = "WarriorBattle|Combat")
+	FGameplayTag CurrentEquippedWeaponTag;
+
 private:
 	UPROPERTY()
 	TMap<FGameplayTag, AWBBaseWeapon*> CharacterCarriedWeaponMap;
-	
-	UPROPERTY()
-	FGameplayTag CurrentEquippedWeaponTag = FGameplayTag();
 
 public:
 	UFUNCTION(BlueprintCallable)
