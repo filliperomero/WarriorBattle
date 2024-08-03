@@ -3,6 +3,7 @@
 #include "Types/WBStructTypes.h"
 
 #include "AbilitySystem/Ability/WBGameplayAbility.h"
+#include "AbilitySystem/Ability/WBHeroGameplayAbility.h"
 
 bool FWBHeroAbilitySet::IsValid() const
 {

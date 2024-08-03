@@ -5,8 +5,8 @@
 #include "GameplayTagContainer.h"
 #include "WBStructTypes.generated.h"
 
+class UWBHeroGameplayAbility;
 class UInputMappingContext;
-class UWBGameplayAbility;
 class UWBHeroLinkedAnimLayer;
 
 USTRUCT(BlueprintType)
@@ -19,7 +19,7 @@ public:
 	FGameplayTag InputTag;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-	TSubclassOf<UWBGameplayAbility> AbilityToGrant;
+	TSubclassOf<UWBHeroGameplayAbility> AbilityToGrant;
 
 	bool IsValid() const;
 };
