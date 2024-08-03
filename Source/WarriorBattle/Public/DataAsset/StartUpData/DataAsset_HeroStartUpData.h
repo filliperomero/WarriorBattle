@@ -4,11 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "DataAsset_BaseStartUpData.h"
-#include "GameplayTagContainer.h"
 #include "Types/WBStructTypes.h"
 #include "DataAsset_HeroStartUpData.generated.h"
-
-
 
 UCLASS()
 class WARRIORBATTLE_API UDataAsset_HeroStartUpData : public UDataAsset_BaseStartUpData

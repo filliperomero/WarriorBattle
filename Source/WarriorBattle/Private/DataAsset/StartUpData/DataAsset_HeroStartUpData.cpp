@@ -3,7 +3,7 @@
 #include "DataAsset/StartUpData/DataAsset_HeroStartUpData.h"
 
 #include "AbilitySystem/WBAbilitySystemComponent.h"
-#include "AbilitySystem/Ability/WBGameplayAbility.h"
+#include "AbilitySystem/Ability/WBHeroGameplayAbility.h"
 
 void UDataAsset_HeroStartUpData::GiveToAbilitySystemComponent(UWBAbilitySystemComponent* InASCToGive, int32 ApplyLevel)
 {
