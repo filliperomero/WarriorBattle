@@ -2,7 +2,6 @@
 
 #include "Character/WBEnemyCharacter.h"
 
-#include "WBDebugHelper.h"
 #include "Component/Combat/EnemyCombatComponent.h"
 #include "DataAsset/StartUpData/DataAsset_EnemyStartUpData.h"
 #include "GameFramework/CharacterMovementComponent.h"
@@ -25,6 +24,11 @@ AWBEnemyCharacter::AWBEnemyCharacter()
 	EnemyCombatComponent = CreateDefaultSubobject<UEnemyCombatComponent>(TEXT("EnemyCombatComponent"));
 }
 
+UPawnCombatComponent* AWBEnemyCharacter::GetPawnCombatComponent() const
+{
+	return GetEnemyCombatComponent();
+}
+
 void AWBEnemyCharacter::PossessedBy(AController* NewController)
 {
 	Super::PossessedBy(NewController);
@@ -45,8 +49,6 @@ void AWBEnemyCharacter::InitEnemyStartupData()
 				if (UDataAsset_BaseStartUpData* LoadedData = CharacterStartUpData.Get())
 				{
 					LoadedData->GiveToAbilitySystemComponent(WBAbilitySystemComponent);
-					
-					Debug::Print(TEXT("Enemy Start Up Data Loaded"));
 				}
 			}
 		)

@@ -2,6 +2,7 @@
 
 #include "AbilitySystem/Ability/WBGameplayAbility.h"
 
+#include "AbilitySystemBlueprintLibrary.h"
 #include "AbilitySystemComponent.h"
 #include "AbilitySystem/WBAbilitySystemComponent.h"
 #include "Component/Combat/PawnCombatComponent.h"
@@ -41,4 +42,25 @@ UPawnCombatComponent* UWBGameplayAbility::GetPawnCombatComponentFromActorInfo() 
 UWBAbilitySystemComponent* UWBGameplayAbility::GetWBAbilitySystemComponentFromActorInfo() const
 {
 	return Cast<UWBAbilitySystemComponent>(CurrentActorInfo->AbilitySystemComponent);
+}
+
+FActiveGameplayEffectHandle UWBGameplayAbility::NativeApplyEffectSpecHandleToTarget(AActor* TargetActor, const FGameplayEffectSpecHandle& InSpecHandle)
+{
+	UAbilitySystemComponent* TargetASC = UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(TargetActor);
+
+	check(TargetASC && InSpecHandle.IsValid());
+	
+	return GetWBAbilitySystemComponentFromActorInfo()->ApplyGameplayEffectSpecToTarget(
+		*InSpecHandle.Data,
+		TargetASC
+	);
+}
+
+FActiveGameplayEffectHandle UWBGameplayAbility::BP_ApplyEffectSpecHandleToTarget(AActor* TargetActor, const FGameplayEffectSpecHandle& InSpecHandle, EWBSuccessType& OutSuccessType)
+{
+	FActiveGameplayEffectHandle ActiveGameplayEffectHandle = NativeApplyEffectSpecHandleToTarget(TargetActor, InSpecHandle);
+
+	OutSuccessType = ActiveGameplayEffectHandle.WasSuccessfullyApplied() ? EWBSuccessType::Successful : EWBSuccessType::Failed;
+
+	return ActiveGameplayEffectHandle;
 }

@@ -40,6 +40,11 @@ AWBHeroCharacter::AWBHeroCharacter()
 	HeroCombatComponent = CreateDefaultSubobject<UHeroCombatComponent>(TEXT("HeroCombatComponent"));
 }
 
+UPawnCombatComponent* AWBHeroCharacter::GetPawnCombatComponent() const
+{
+	return GetHeroCombatComponent();
+}
+
 void AWBHeroCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	checkf(InputConfigDataAsset, TEXT("InputConfigDataAsset Uninitialized, fill variable inside Hero Character"))

@@ -21,6 +21,10 @@ class WARRIORBATTLE_API AWBHeroCharacter : public AWBBaseCharacter
 public:
 	AWBHeroCharacter();
 
+	/** PawnCombat Interface*/
+	virtual UPawnCombatComponent* GetPawnCombatComponent() const override;
+	/** End PawnCombat Interface*/
+
 protected:
 	virtual void SetupPlayerInputComponent(UInputComponent* PlayerInputComponent) override;
 	virtual void BeginPlay() override;

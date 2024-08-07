@@ -2,7 +2,7 @@
 
 #include "Component/Combat/PawnCombatComponent.h"
 
-#include "WBDebugHelper.h"
+#include "Components/BoxComponent.h"
 #include "Item/Weapon/WBBaseWeapon.h"
 
 void UPawnCombatComponent::RegisterSpawnedWeapon(FGameplayTag InWeaponTagToRegister, AWBBaseWeapon* InWeaponToRegister, const bool bRegisterAsEquippedWeapon)
@@ -12,10 +12,10 @@ void UPawnCombatComponent::RegisterSpawnedWeapon(FGameplayTag InWeaponTagToRegis
 
 	CharacterCarriedWeaponMap.Emplace(InWeaponTagToRegister, InWeaponToRegister);
 
-	if (bRegisterAsEquippedWeapon) CurrentEquippedWeaponTag = InWeaponTagToRegister;
+	InWeaponToRegister->OnWeaponHitTarget.BindUObject(this, &ThisClass::OnHitTargetActor);
+	InWeaponToRegister->OnWeaponPulledFromTarget.BindUObject(this, &ThisClass::OnWeaponPulledFromTargetActor);
 
-	const FString DebugMessage = FString::Printf(TEXT("A Weapon named: %s has been registered using the tag %s"), *InWeaponToRegister->GetName(), *InWeaponTagToRegister.ToString()); 
-	Debug::Print(DebugMessage, FColor::Purple);
+	if (bRegisterAsEquippedWeapon) CurrentEquippedWeaponTag = InWeaponTagToRegister;
 }
 
 AWBBaseWeapon* UPawnCombatComponent::GetCharacterCarriedWeaponByTag(FGameplayTag InWeaponTagToGet) const
@@ -36,3 +36,20 @@ AWBBaseWeapon* UPawnCombatComponent::GetCharacterCurrentEquippedWeapon() const
 
 	return GetCharacterCarriedWeaponByTag(CurrentEquippedWeaponTag);
 }
+
+void UPawnCombatComponent::ToggleWeaponCollision(bool bEnable, EToggleDamageType ToggleDamageType)
+{
+	if (ToggleDamageType == EToggleDamageType::CurrentEquippedWeapon)
+	{
+		const AWBBaseWeapon* WeaponToToggle = GetCharacterCurrentEquippedWeapon();
+		
+		WeaponToToggle->GetWeaponCollisionBox()->SetCollisionEnabled(bEnable ? ECollisionEnabled::QueryOnly : ECollisionEnabled::NoCollision);
+		if(!bEnable) OverlappedActors.Empty();
+	}
+
+	// TODO: Need to handle other ToggleDamageType
+}
+
+void UPawnCombatComponent::OnHitTargetActor(AActor* HitActor) {}
+
+void UPawnCombatComponent::OnWeaponPulledFromTargetActor(AActor* InteractedActor) {}

@@ -16,6 +16,10 @@ class WARRIORBATTLE_API AWBEnemyCharacter : public AWBBaseCharacter
 public:
 	AWBEnemyCharacter();
 
+	/** PawnCombat Interface*/
+	virtual UPawnCombatComponent* GetPawnCombatComponent() const override;
+	/** End PawnCombat Interface*/
+
 protected:
 	virtual void PossessedBy(AController* NewController) override;
 	

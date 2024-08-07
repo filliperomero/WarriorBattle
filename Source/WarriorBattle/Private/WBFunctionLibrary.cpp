@@ -4,6 +4,7 @@
 
 #include "AbilitySystemBlueprintLibrary.h"
 #include "AbilitySystem/WBAbilitySystemComponent.h"
+#include "Interface/PawnCombatInterface.h"
 
 UWBAbilitySystemComponent* UWBFunctionLibrary::NativeGetWBASCFromActor(AActor* InActor)
 {
@@ -42,4 +43,24 @@ void UWBFunctionLibrary::RemoveGameplayTagFromActor(AActor* InActor, FGameplayTa
 void UWBFunctionLibrary::BP_DoesActorHaveTag(AActor* InActor, FGameplayTag TagToCheck, EWBConfirmType& OutConfirmType)
 {
 	OutConfirmType = NativeDoesActorHaveTag(InActor, TagToCheck) ? EWBConfirmType::Yes : EWBConfirmType::No;
+}
+
+UPawnCombatComponent* UWBFunctionLibrary::NativeGetPawnCombatComponentFromActor(AActor* InActor)
+{
+	check(InActor)
+	
+	if (const IPawnCombatInterface* PawnCombatInterface = Cast<IPawnCombatInterface>(InActor))
+	{
+		 return PawnCombatInterface->GetPawnCombatComponent();
+	}
+
+	return nullptr;
+}
+
+UPawnCombatComponent* UWBFunctionLibrary::BP_GetPawnCombatComponentFromActor(AActor* InActor, EWBValidType& OutValidType)
+{
+	UPawnCombatComponent* CombatComponent = NativeGetPawnCombatComponentFromActor(InActor);
+	OutValidType = CombatComponent ? EWBValidType::Valid : EWBValidType::Invalid;
+	
+	return CombatComponent;
 }

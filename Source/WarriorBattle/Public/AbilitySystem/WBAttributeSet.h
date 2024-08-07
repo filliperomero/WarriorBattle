@@ -21,6 +21,8 @@ class WARRIORBATTLE_API UWBAttributeSet : public UAttributeSet
 public:
 	UWBAttributeSet();
 
+	virtual void PostGameplayEffectExecute(const FGameplayEffectModCallbackData& Data) override;
+
 	UPROPERTY(BlueprintReadOnly, Category = "Health")
 	FGameplayAttributeData Health;
 	ATTRIBUTE_ACCESSORS(UWBAttributeSet, Health);
@@ -44,4 +46,8 @@ public:
 	UPROPERTY(BlueprintReadOnly, Category = "Damage")
 	FGameplayAttributeData DefensePower;
 	ATTRIBUTE_ACCESSORS(UWBAttributeSet, DefensePower);
+
+	UPROPERTY(BlueprintReadOnly, Category = "DamageTaken")
+	FGameplayAttributeData DamageTaken;
+	ATTRIBUTE_ACCESSORS(UWBAttributeSet, DamageTaken);
 };
