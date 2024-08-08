@@ -23,7 +23,7 @@ public:
 protected:
 	virtual void PossessedBy(AController* NewController) override;
 	
-	UPROPERTY(VisibleAnywhere, Category = Combat)
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Combat)
 	TObjectPtr<UEnemyCombatComponent> EnemyCombatComponent;
 
 private:
