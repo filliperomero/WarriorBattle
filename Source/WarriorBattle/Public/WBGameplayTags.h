@@ -45,4 +45,7 @@ namespace WBGameplayTags
 	WARRIORBATTLE_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Shared_Ability_HitReact)
 	
 	WARRIORBATTLE_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Shared_SetByCaller_BaseDamage)
+
+	/** GameplayCue */
+	WARRIORBATTLE_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(GameplayCue_MeleeHit_Axe)
 }

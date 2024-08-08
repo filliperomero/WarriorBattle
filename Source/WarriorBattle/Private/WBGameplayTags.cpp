@@ -42,4 +42,7 @@ namespace WBGameplayTags
 	UE_DEFINE_GAMEPLAY_TAG(Shared_Ability_HitReact, "Shared.Ability.HitReact");
 	
 	UE_DEFINE_GAMEPLAY_TAG(Shared_SetByCaller_BaseDamage, "Shared.SetByCaller.BaseDamage");
+	
+	/** GameplayCue */
+	UE_DEFINE_GAMEPLAY_TAG(GameplayCue_MeleeHit_Axe, "GameplayCue.MeleeHit.Axe");
 }
