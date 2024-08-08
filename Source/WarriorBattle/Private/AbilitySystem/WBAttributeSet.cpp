@@ -3,6 +3,8 @@
 #include "AbilitySystem/WBAttributeSet.h"
 
 #include "GameplayEffectExtension.h"
+#include "WBFunctionLibrary.h"
+#include "WBGameplayTags.h"
 
 UWBAttributeSet::UWBAttributeSet()
 {
@@ -44,7 +46,7 @@ void UWBAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallback
 
 		if (bIsFatal)
 		{
-			// TODO: Handle Death
+			UWBFunctionLibrary::AddGameplayTagToActor(Data.Target.GetAvatarActor(), WBGameplayTags::Shared_Status_Dead);
 		}
 	}
 }
