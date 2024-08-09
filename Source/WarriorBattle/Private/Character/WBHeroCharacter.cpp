@@ -8,6 +8,7 @@
 #include "Camera/CameraComponent.h"
 #include "Component/Combat/HeroCombatComponent.h"
 #include "Component/Input/WBInputComponent.h"
+#include "Component/UI/HeroUIComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "DataAsset/Input/DataAsset_InputConfig.h"
 #include "DataAsset/StartUpData/DataAsset_BaseStartUpData.h"
@@ -38,11 +39,22 @@ AWBHeroCharacter::AWBHeroCharacter()
 	FollowCamera->bUsePawnControlRotation = false;
 
 	HeroCombatComponent = CreateDefaultSubobject<UHeroCombatComponent>(TEXT("HeroCombatComponent"));
+	HeroUIComponent = CreateDefaultSubobject<UHeroUIComponent>(TEXT("HeroUIComponent"));
 }
 
 UPawnCombatComponent* AWBHeroCharacter::GetPawnCombatComponent() const
 {
 	return GetHeroCombatComponent();
+}
+
+UPawnUIComponent* AWBHeroCharacter::GetPawnUIComponent() const
+{
+	return HeroUIComponent;
+}
+
+UHeroUIComponent* AWBHeroCharacter::GetHeroUIComponent() const
+{
+	return HeroUIComponent;
 }
 
 void AWBHeroCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)

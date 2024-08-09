@@ -13,6 +13,8 @@
 	GAMEPLAYATTRIBUTE_VALUE_SETTER(PropertyName) \
 	GAMEPLAYATTRIBUTE_VALUE_INITTER(PropertyName)
 
+class IPawnUIInterface;
+
 UCLASS()
 class WARRIORBATTLE_API UWBAttributeSet : public UAttributeSet
 {
@@ -50,4 +52,7 @@ public:
 	UPROPERTY(BlueprintReadOnly, Category = "DamageTaken")
 	FGameplayAttributeData DamageTaken;
 	ATTRIBUTE_ACCESSORS(UWBAttributeSet, DamageTaken);
+
+private:
+	TWeakInterfacePtr<IPawnUIInterface> CachedPawnUIInterface;
 };
