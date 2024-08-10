@@ -6,6 +6,7 @@
 #include "WBBaseCharacter.h"
 #include "WBEnemyCharacter.generated.h"
 
+class UWidgetComponent;
 class UEnemyUIComponent;
 class UEnemyCombatComponent;
 
@@ -27,6 +28,7 @@ public:
 	/** End IPawnUI Interface*/
 
 protected:
+	virtual void BeginPlay() override;
 	virtual void PossessedBy(AController* NewController) override;
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Combat)
@@ -34,6 +36,9 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = UI)
 	TObjectPtr<UEnemyUIComponent> EnemyUIComponent;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = UI)
+	TObjectPtr<UWidgetComponent> EnemyHealthWidgetComponent;
 
 private:
 	void InitEnemyStartupData();
