@@ -36,6 +36,11 @@ UPawnUIComponent* AWBEnemyCharacter::GetPawnUIComponent() const
 	return EnemyUIComponent;
 }
 
+UEnemyUIComponent* AWBEnemyCharacter::GetEnemyUIComponent() const
+{
+	return EnemyUIComponent;
+}
+
 void AWBEnemyCharacter::PossessedBy(AController* NewController)
 {
 	Super::PossessedBy(NewController);
