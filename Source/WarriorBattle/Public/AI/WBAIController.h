@@ -17,6 +17,10 @@ class WARRIORBATTLE_API AWBAIController : public AAIController
 public:
 	AWBAIController(const FObjectInitializer& ObjectInitializer);
 
+	/** GenericTeamAgent Interface */
+	virtual ETeamAttitude::Type GetTeamAttitudeTowards(const AActor& Other) const override;
+	/** End GenericTeamAgent Interface */
+
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	TObjectPtr<UAIPerceptionComponent> EnemyPerceptionComponent;
