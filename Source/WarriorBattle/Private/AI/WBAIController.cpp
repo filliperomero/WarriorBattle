@@ -2,7 +2,7 @@
 
 #include "AI/WBAIController.h"
 
-#include "WBDebugHelper.h"
+#include "BehaviorTree/BlackboardComponent.h"
 #include "Navigation/CrowdFollowingComponent.h"
 #include "Perception/AIPerceptionComponent.h"
 #include "Perception/AISenseConfig_Sight.h"
@@ -10,11 +10,6 @@
 AWBAIController::AWBAIController(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer.SetDefaultSubobjectClass<UCrowdFollowingComponent>("PathFollowingComponent"))
 {
-	if (UCrowdFollowingComponent* CrowdComp = Cast<UCrowdFollowingComponent>(GetPathFollowingComponent()))
-	{
-		Debug::Print(TEXT("CrowdFollowingComponent valid"), FColor::Green);
-	}
-
 	AISenseConfig_Sight = CreateDefaultSubobject<UAISenseConfig_Sight>(TEXT("EnemySenseConfig_Sight"));
 	AISenseConfig_Sight->DetectionByAffiliation.bDetectEnemies = true;
 	AISenseConfig_Sight->DetectionByAffiliation.bDetectFriendlies = false;
@@ -49,6 +44,9 @@ void AWBAIController::OnEnemyPerceptionUpdated(AActor* Actor, FAIStimulus Stimul
 {
 	if (Stimulus.WasSuccessfullySensed() && IsValid(Actor))
 	{
-		Debug::Print(Actor->GetActorNameOrLabel() + TEXT(" was sensed"), FColor::Blue);
+		if (UBlackboardComponent* BlackboardComponent = GetBlackboardComponent())
+		{
+			BlackboardComponent->SetValueAsObject(FName("TargetActor"), Actor);
+		}
 	}
 }
