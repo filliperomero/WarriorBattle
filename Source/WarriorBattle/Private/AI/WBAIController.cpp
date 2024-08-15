@@ -32,7 +32,8 @@ ETeamAttitude::Type AWBAIController::GetTeamAttitudeTowards(const AActor& Other)
 
 	const IGenericTeamAgentInterface* OtherTeamAgent = Cast<const IGenericTeamAgentInterface>(PawnToCheck->GetController());
 
-	if (OtherTeamAgent && OtherTeamAgent->GetGenericTeamId() != GetGenericTeamId())
+	// Since Hero Character has GenericTeam 0, we should only look for genericTeamId less than 1
+	if (OtherTeamAgent && OtherTeamAgent->GetGenericTeamId() < GetGenericTeamId())
 	{
 		return ETeamAttitude::Hostile;
 	}
@@ -73,11 +74,14 @@ void AWBAIController::BeginPlay()
 
 void AWBAIController::OnEnemyPerceptionUpdated(AActor* Actor, FAIStimulus Stimulus)
 {
-	if (Stimulus.WasSuccessfullySensed() && IsValid(Actor))
+	if (UBlackboardComponent* BlackboardComponent = GetBlackboardComponent())
 	{
-		if (UBlackboardComponent* BlackboardComponent = GetBlackboardComponent())
+		if (!BlackboardComponent->GetValueAsObject(FName("TargetActor")))
 		{
-			BlackboardComponent->SetValueAsObject(FName("TargetActor"), Actor);
+			if (Stimulus.WasSuccessfullySensed() && IsValid(Actor))
+			{
+				BlackboardComponent->SetValueAsObject(FName("TargetActor"), Actor);
+			}
 		}
 	}
 }
