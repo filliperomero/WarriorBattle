@@ -3,6 +3,7 @@
 #include "Character/Animation/WBCharacterAnimInstance.h"
 #include "Character/WBBaseCharacter.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "KismetAnimationLibrary.h"
 
 void UWBCharacterAnimInstance::NativeInitializeAnimation()
 {
@@ -20,4 +21,6 @@ void UWBCharacterAnimInstance::NativeThreadSafeUpdateAnimation(float DeltaSecond
 
 	GroundSpeed = OwningCharacter->GetVelocity().Size2D();
 	bHasAcceleration = OwningMovementComponent->GetCurrentAcceleration().SizeSquared2D() > 0.f;
+
+	LocomotionDirection = UKismetAnimationLibrary::CalculateDirection(OwningCharacter->GetVelocity(), OwningCharacter->GetActorRotation());
 }
