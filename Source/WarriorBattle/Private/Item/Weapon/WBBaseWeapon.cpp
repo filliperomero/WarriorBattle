@@ -2,6 +2,7 @@
 
 #include "Item/Weapon/WBBaseWeapon.h"
 
+#include "WBFunctionLibrary.h"
 #include "Components/BoxComponent.h"
 
 AWBBaseWeapon::AWBBaseWeapon()
@@ -27,12 +28,10 @@ void AWBBaseWeapon::OnCollisionBoxBeginOverlap(UPrimitiveComponent* OverlappedCo
 
 	if (APawn* HitPawn = Cast<APawn>(OtherActor))
 	{
-		if (WeaponOwningPawn != HitPawn)
+		if (UWBFunctionLibrary::IsTargetPawnHostile(WeaponOwningPawn, HitPawn))
 		{
 			OnWeaponHitTarget.ExecuteIfBound(OtherActor);
 		}
-
-		// TODO: Implement hit check for enemy characters
 	}
 }
 
@@ -44,11 +43,9 @@ void AWBBaseWeapon::OnCollisionBoxEndOverlap(UPrimitiveComponent* OverlappedComp
 
 	if (APawn* HitPawn = Cast<APawn>(OtherActor))
 	{
-		if (WeaponOwningPawn != HitPawn)
+		if (UWBFunctionLibrary::IsTargetPawnHostile(WeaponOwningPawn, HitPawn))
 		{
 			OnWeaponPulledFromTarget.ExecuteIfBound(OtherActor);
 		}
-
-		// TODO: Implement hit check for enemy characters
 	}
 }

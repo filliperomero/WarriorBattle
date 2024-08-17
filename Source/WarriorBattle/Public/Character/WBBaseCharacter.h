@@ -33,7 +33,7 @@ public:
 protected:
 	virtual void PossessedBy(AController* NewController) override;
 	
-	UPROPERTY(VisibleAnywhere, Category = "Ability System")
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Ability System")
 	TObjectPtr<UWBAbilitySystemComponent> WBAbilitySystemComponent;
 
 	UPROPERTY(VisibleAnywhere, Category = "Ability System")

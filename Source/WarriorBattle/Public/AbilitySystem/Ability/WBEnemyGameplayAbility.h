@@ -21,6 +21,9 @@ public:
 	UFUNCTION(BlueprintPure, Category = "WarrioBattle|Ability")
 	UEnemyCombatComponent* GetEnemyCombatComponentFromActorInfo();
 
+	UFUNCTION(BlueprintPure, Category = "WarrioBattle|Ability")
+	FGameplayEffectSpecHandle MakeEnemyDamageEffectSpecHandle(TSubclassOf<UGameplayEffect> EffectClass, const FScalableFloat& InDamageScalableFloat);
+
 private:
 	TWeakObjectPtr<AWBEnemyCharacter> CachedWBEnemyCharacter;
 };

@@ -5,6 +5,7 @@
 #include "AbilitySystemBlueprintLibrary.h"
 #include "AbilitySystem/WBAbilitySystemComponent.h"
 #include "Interface/PawnCombatInterface.h"
+#include "GenericTeamAgentInterface.h"
 
 UWBAbilitySystemComponent* UWBFunctionLibrary::NativeGetWBASCFromActor(AActor* InActor)
 {
@@ -63,4 +64,20 @@ UPawnCombatComponent* UWBFunctionLibrary::BP_GetPawnCombatComponentFromActor(AAc
 	OutValidType = CombatComponent ? EWBValidType::Valid : EWBValidType::Invalid;
 	
 	return CombatComponent;
+}
+
+bool UWBFunctionLibrary::IsTargetPawnHostile(APawn* QueryPawn, APawn* TargetPawn)
+{
+	check(QueryPawn);
+	check(TargetPawn);
+	
+	IGenericTeamAgentInterface* QueryTeamAgent = Cast<IGenericTeamAgentInterface>(QueryPawn->GetController());
+	IGenericTeamAgentInterface* TargetTeamAgent = Cast<IGenericTeamAgentInterface>(TargetPawn->GetController());
+
+	if (QueryTeamAgent && TargetTeamAgent)
+	{
+		return QueryTeamAgent->GetGenericTeamId() != TargetTeamAgent->GetGenericTeamId();
+	}
+	
+	return false;
 }

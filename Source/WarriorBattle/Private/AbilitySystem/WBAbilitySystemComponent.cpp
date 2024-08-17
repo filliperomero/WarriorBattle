@@ -2,7 +2,7 @@
 
 #include "AbilitySystem/WBAbilitySystemComponent.h"
 
-#include "AbilitySystem/Ability/WBGameplayAbility.h"
+#include "AbilitySystem/Ability/WBHeroGameplayAbility.h"
 
 void UWBAbilitySystemComponent::OnAbilityInputPressed(const FGameplayTag& InInputTag)
 {
@@ -49,4 +49,23 @@ void UWBAbilitySystemComponent::RemoveGrantedHeroWeaponAbilities(TArray<FGamepla
 	}
 
 	InSpecHandlesToRemove.Empty();
+}
+
+bool UWBAbilitySystemComponent::TryActivateAbilityByTag(const FGameplayTag& AbilityTagToActivate)
+{
+	check(AbilityTagToActivate.IsValid());
+
+	TArray<FGameplayAbilitySpec*> FoundAbilitySpecs;
+	GetActivatableGameplayAbilitySpecsByAllMatchingTags(AbilityTagToActivate.GetSingleTagContainer(), FoundAbilitySpecs);
+
+	if (FoundAbilitySpecs.IsEmpty()) return false;
+
+	const int32 RandomAbilityIndex = FMath::RandRange(0, FoundAbilitySpecs.Num() - 1);
+	FGameplayAbilitySpec* SpecToActivate = FoundAbilitySpecs[RandomAbilityIndex];
+
+	check(SpecToActivate);
+
+	if (SpecToActivate->IsActive()) return false;
+	
+	return TryActivateAbility(SpecToActivate->Handle);
 }
