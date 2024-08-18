@@ -54,5 +54,6 @@ namespace WBGameplayTags
 
 	/** GameplayCue */
 	WARRIORBATTLE_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(GameplayCue_MeleeHit_Axe)
+	WARRIORBATTLE_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(GameplayCue_MeleeHit_Stick)
 	WARRIORBATTLE_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(GameplayCue_Death_Guardian)
 }
