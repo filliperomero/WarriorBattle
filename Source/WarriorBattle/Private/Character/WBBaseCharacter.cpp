@@ -1,6 +1,8 @@
 ﻿// Fillipe Romero - All Rights Reserved
 
 #include "Character/WBBaseCharacter.h"
+
+#include "MotionWarpingComponent.h"
 #include "AbilitySystem/WBAbilitySystemComponent.h"
 #include "AbilitySystem/WBAttributeSet.h"
 
@@ -10,10 +12,11 @@ AWBBaseCharacter::AWBBaseCharacter()
 	PrimaryActorTick.bStartWithTickEnabled = false;
 
 	GetMesh()->bReceivesDecals = false;
-	
-	WBAbilitySystemComponent = CreateDefaultSubobject<UWBAbilitySystemComponent>(TEXT("WBAbilitySystemComponent"));
 
+	/* Components */
+	WBAbilitySystemComponent = CreateDefaultSubobject<UWBAbilitySystemComponent>(TEXT("WBAbilitySystemComponent"));
 	WBAttributeSet = CreateDefaultSubobject<UWBAttributeSet>(TEXT("WBAttributeSet"));
+	MotionWarpingComponent = CreateDefaultSubobject<UMotionWarpingComponent>(TEXT("MotionWarpingComponent"));
 }
 
 UAbilitySystemComponent* AWBBaseCharacter::GetAbilitySystemComponent() const

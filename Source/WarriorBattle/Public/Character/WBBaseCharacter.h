@@ -9,6 +9,7 @@
 #include "Interface/PawnUIInterface.h"
 #include "WBBaseCharacter.generated.h"
 
+class UMotionWarpingComponent;
 class UDataAsset_BaseStartUpData;
 class UWBAttributeSet;
 class UWBAbilitySystemComponent;
@@ -38,6 +39,9 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, Category = "Ability System")
 	TObjectPtr<UWBAttributeSet> WBAttributeSet;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Motion Warping")
+	TObjectPtr<UMotionWarpingComponent> MotionWarpingComponent;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Character Data")
 	TSoftObjectPtr<UDataAsset_BaseStartUpData> CharacterStartUpData;
