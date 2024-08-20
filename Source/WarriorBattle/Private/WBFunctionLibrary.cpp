@@ -6,6 +6,8 @@
 #include "AbilitySystem/WBAbilitySystemComponent.h"
 #include "Interface/PawnCombatInterface.h"
 #include "GenericTeamAgentInterface.h"
+#include "WBGameplayTags.h"
+#include "Kismet/KismetMathLibrary.h"
 
 UWBAbilitySystemComponent* UWBFunctionLibrary::NativeGetWBASCFromActor(AActor* InActor)
 {
@@ -85,4 +87,42 @@ bool UWBFunctionLibrary::IsTargetPawnHostile(APawn* QueryPawn, APawn* TargetPawn
 float UWBFunctionLibrary::GetScalableFloatValueAtLevel(const FScalableFloat& InScalableFloat, const float InLevel)
 {
 	return InScalableFloat.GetValueAtLevel(InLevel);
+}
+
+FGameplayTag UWBFunctionLibrary::ComputeHitReactDirectionTag(AActor* InAttacker, AActor* InVictim, float& OutAngleDifference)
+{
+	check(InAttacker && InVictim);
+
+	const FVector VictimForward = InVictim->GetActorForwardVector();
+	const FVector VictimToAttackerNormalized = (InAttacker->GetActorLocation() - InVictim->GetActorLocation()).GetSafeNormal();
+
+	const float DotResult = FVector::DotProduct(VictimForward, VictimToAttackerNormalized);
+	// Convert back to degrees
+	OutAngleDifference = UKismetMathLibrary::DegAcos(DotResult);
+
+	const FVector CrossResult = FVector::CrossProduct(VictimForward, VictimToAttackerNormalized);
+	
+	if (CrossResult.Z < 0.f)
+	{
+		OutAngleDifference *= -1.f;
+	}
+
+	if (OutAngleDifference >= -45.f && OutAngleDifference <= 45.f)
+	{
+		return WBGameplayTags::Shared_Status_HitReact_Front;
+	}
+	if (OutAngleDifference < -45.f && OutAngleDifference >= -135.f)
+	{
+		return WBGameplayTags::Shared_Status_HitReact_Left;
+	}
+	if (OutAngleDifference < -135.f || OutAngleDifference > 135.f)
+	{
+		return WBGameplayTags::Shared_Status_HitReact_Back;
+	}
+	if (OutAngleDifference > 45.f && OutAngleDifference <= 135.f)
+	{
+		return WBGameplayTags::Shared_Status_HitReact_Right;
+	}
+	
+	return WBGameplayTags::Shared_Status_HitReact_Front;
 }
