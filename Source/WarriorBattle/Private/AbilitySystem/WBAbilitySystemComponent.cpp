@@ -2,6 +2,7 @@
 
 #include "AbilitySystem/WBAbilitySystemComponent.h"
 
+#include "WBGameplayTags.h"
 #include "AbilitySystem/Ability/WBHeroGameplayAbility.h"
 
 void UWBAbilitySystemComponent::OnAbilityInputPressed(const FGameplayTag& InInputTag)
@@ -18,6 +19,15 @@ void UWBAbilitySystemComponent::OnAbilityInputPressed(const FGameplayTag& InInpu
 
 void UWBAbilitySystemComponent::OnAbilityInputReleased(const FGameplayTag& InInputTag)
 {
+	if (!InInputTag.IsValid() || !InInputTag.MatchesTag(WBGameplayTags::InputTag_MustBeHeld)) return;
+
+	for (const FGameplayAbilitySpec& AbilitySpec : GetActivatableAbilities())
+	{
+		if (AbilitySpec.DynamicAbilityTags.HasTagExact(InInputTag) && AbilitySpec.IsActive())
+		{
+			CancelAbilityHandle(AbilitySpec.Handle);
+		}
+	}
 }
 
 void UWBAbilitySystemComponent::GrantHeroWeaponAbilities(const TArray<FWBHeroAbilitySet>& InDefaultWeaponAbilities, int32 ApplyLevel, TArray<FGameplayAbilitySpecHandle>& OutGrantedAbilitySpecHandles)
