@@ -71,4 +71,5 @@ namespace WBGameplayTags
 	WARRIORBATTLE_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(GameplayCue_Death_Guardian)
 	WARRIORBATTLE_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(GameplayCue_Effects_MagicShield)
 	WARRIORBATTLE_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(GameplayCue_Effects_MagicShield_SuccessfulBlock)
+	WARRIORBATTLE_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(GameplayCue_Effects_MagicShield_PerfectBlock)
 }
