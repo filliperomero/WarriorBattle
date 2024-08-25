@@ -2,6 +2,7 @@
 
 #include "Character/WBHeroCharacter.h"
 
+#include "AbilitySystemBlueprintLibrary.h"
 #include "EnhancedInputSubsystems.h"
 #include "WBGameplayTags.h"
 #include "AbilitySystem/WBAbilitySystemComponent.h"
@@ -71,6 +72,9 @@ void AWBHeroCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 		InputComp->BindNativeInputAction(InputConfigDataAsset, WBGameplayTags::InputTag_Move, ETriggerEvent::Triggered, this, &ThisClass::Input_Move);
 		InputComp->BindNativeInputAction(InputConfigDataAsset, WBGameplayTags::InputTag_Look, ETriggerEvent::Triggered, this, &ThisClass::Input_Look);
 
+		InputComp->BindNativeInputAction(InputConfigDataAsset, WBGameplayTags::InputTag_SwitchTarget, ETriggerEvent::Triggered, this, &ThisClass::Input_SwitchTargetTriggered);
+		InputComp->BindNativeInputAction(InputConfigDataAsset, WBGameplayTags::InputTag_SwitchTarget, ETriggerEvent::Completed, this, &ThisClass::Input_SwitchTargetCompleted);
+
 		InputComp->BindAbilityInputAction(InputConfigDataAsset, this, &ThisClass::Input_AbilityInputPressed, &ThisClass::Input_AbilityInputReleased);
 	}
 }
@@ -112,6 +116,21 @@ void AWBHeroCharacter::Input_Look(const FInputActionValue& InputActionValue)
 
 	AddControllerYawInput(LookAxisVector.X);
 	AddControllerPitchInput(LookAxisVector.Y);
+}
+
+void AWBHeroCharacter::Input_SwitchTargetTriggered(const FInputActionValue& InputActionValue)
+{
+	SwitchDirection = InputActionValue.Get<FVector2D>();
+
+	const FGameplayTag SwitchDirectionTag = SwitchDirection.X > 0.f
+		? WBGameplayTags::Player_Event_SwitchTarget_Right
+		: WBGameplayTags::Player_Event_SwitchTarget_Left;
+
+	UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(this, SwitchDirectionTag, FGameplayEventData());
+}
+
+void AWBHeroCharacter::Input_SwitchTargetCompleted(const FInputActionValue& InputActionValue)
+{
 }
 
 void AWBHeroCharacter::Input_AbilityInputPressed(FGameplayTag InInputTag)

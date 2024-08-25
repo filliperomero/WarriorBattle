@@ -13,7 +13,21 @@ void UWBAbilitySystemComponent::OnAbilityInputPressed(const FGameplayTag& InInpu
 	{
 		if (!AbilitySpec.DynamicAbilityTags.HasTagExact(InInputTag)) continue;
 
-		TryActivateAbility(AbilitySpec.Handle);
+		if (InInputTag.MatchesTag(WBGameplayTags::InputTag_Toggleable))
+		{
+			if (AbilitySpec.IsActive())
+			{
+				CancelAbilityHandle(AbilitySpec.Handle);
+			}
+			else
+			{
+				TryActivateAbility(AbilitySpec.Handle);
+			}
+		}
+		else
+		{
+			TryActivateAbility(AbilitySpec.Handle);
+		}
 	}
 }
 
