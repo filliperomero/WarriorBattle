@@ -56,6 +56,9 @@ private:
 	
 	UPROPERTY(EditDefaultsOnly, Category = "Target Lock")
 	float TargetLockMaxWalkSpeed = 200.f;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Target Lock")
+	float TargetLockCameraOffsetDistance = 20.f;
 	
 	UPROPERTY(EditDefaultsOnly, Category = "Target Lock")
 	TObjectPtr<UInputMappingContext> TargetLockMappingContext;
