@@ -19,9 +19,11 @@
 void UWBTargetLock::ActivateAbility(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo,
                                     const FGameplayAbilityActivationInfo ActivationInfo, const FGameplayEventData* TriggerEventData)
 {
-	TryLockOnTarget();
-	InitTargetLockMovement();
-	InitTargetLockMappingContext();
+	if (TryLockOnTarget())
+	{
+		InitTargetLockMovement();
+		InitTargetLockMappingContext();
+	}
 	
 	Super::ActivateAbility(Handle, ActorInfo, ActivationInfo, TriggerEventData);
 }
@@ -83,11 +85,15 @@ void UWBTargetLock::SwitchTarget(const FGameplayTag& InSwitchDirectionTag)
 	}
 }
 
-void UWBTargetLock::TryLockOnTarget()
+bool UWBTargetLock::TryLockOnTarget()
 {
 	GetAvailableActorsToLock();
 
-	if (AvailableActorsToLock.IsEmpty()) return CancelTargetLockAbility();
+	if (AvailableActorsToLock.IsEmpty())
+	{
+		CancelTargetLockAbility();
+		return false;
+	}
 
 	CurrentLockedActor = GetNearestTargetFromAvailableActors(AvailableActorsToLock);
 
@@ -99,7 +105,10 @@ void UWBTargetLock::TryLockOnTarget()
 	else
 	{
 		CancelTargetLockAbility();
+		return false;
 	}
+
+	return true;
 }
 
 void UWBTargetLock::GetAvailableActorsToLock()
