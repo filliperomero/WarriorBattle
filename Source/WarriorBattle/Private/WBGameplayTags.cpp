@@ -54,6 +54,7 @@ namespace WBGameplayTags
 
 	UE_DEFINE_GAMEPLAY_TAG(Enemy_Status_Strafing, "Enemy.Status.Strafing");
 	UE_DEFINE_GAMEPLAY_TAG(Enemy_Status_UnderAttack, "Enemy.Status.UnderAttack");
+	UE_DEFINE_GAMEPLAY_TAG(Enemy_Status_Unblockable, "Enemy.Status.Unblockable");
 
 	/** Shared Tags*/
 	UE_DEFINE_GAMEPLAY_TAG(Shared_Event_MeleeHit, "Shared.Event.MeleeHit");
@@ -78,4 +79,5 @@ namespace WBGameplayTags
 	UE_DEFINE_GAMEPLAY_TAG(GameplayCue_Effects_MagicShield, "GameplayCue.Effects.MagicShield");
 	UE_DEFINE_GAMEPLAY_TAG(GameplayCue_Effects_MagicShield_SuccessfulBlock, "GameplayCue.Effects.MagicShield.SuccessfulBlock");
 	UE_DEFINE_GAMEPLAY_TAG(GameplayCue_Effects_MagicShield_PerfectBlock, "GameplayCue.Effects.MagicShield.PerfectBlock");
+	UE_DEFINE_GAMEPLAY_TAG(GameplayCue_Effects_UnblockableWarning, "GameplayCue.Effects.UnblockableWarning");
 }
