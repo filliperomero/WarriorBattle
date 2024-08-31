@@ -76,6 +76,7 @@ namespace WBGameplayTags
 	UE_DEFINE_GAMEPLAY_TAG(GameplayCue_MeleeHit_Axe, "GameplayCue.MeleeHit.Axe");
 	UE_DEFINE_GAMEPLAY_TAG(GameplayCue_MeleeHit_Stick, "GameplayCue.MeleeHit.Stick");
 	UE_DEFINE_GAMEPLAY_TAG(GameplayCue_Death_Guardian, "GameplayCue.Death.Guardian");
+	UE_DEFINE_GAMEPLAY_TAG(GameplayCue_Death_FrostGiant, "GameplayCue.Death.FrostGiant");
 	UE_DEFINE_GAMEPLAY_TAG(GameplayCue_Effects_MagicShield, "GameplayCue.Effects.MagicShield");
 	UE_DEFINE_GAMEPLAY_TAG(GameplayCue_Effects_MagicShield_SuccessfulBlock, "GameplayCue.Effects.MagicShield.SuccessfulBlock");
 	UE_DEFINE_GAMEPLAY_TAG(GameplayCue_Effects_MagicShield_PerfectBlock, "GameplayCue.Effects.MagicShield.PerfectBlock");
