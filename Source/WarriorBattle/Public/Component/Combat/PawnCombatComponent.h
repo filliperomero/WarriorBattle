@@ -44,6 +44,9 @@ public:
 protected:
 	UPROPERTY()
 	TArray<AActor*> OverlappedActors;
+
+	virtual void ToggleCurrentEquippedWeaponCollision(bool bEnable);
+	virtual void ToggleBodyCollisionBoxCollision(bool bEnable, EToggleDamageType ToggleDamageType);
 	
 private:
 	UPROPERTY()
