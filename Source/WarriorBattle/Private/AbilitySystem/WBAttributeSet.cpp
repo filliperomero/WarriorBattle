@@ -28,7 +28,7 @@ void UWBAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallback
 		CachedPawnUIInterface = TWeakInterfacePtr<IPawnUIInterface>(Data.Target.GetAvatarActor());
 	}
 
-	checkf(CachedPawnUIInterface.IsValid(), TEXT("%s didn't implement IPawnuIInterface"), *Data.Target.GetAvatarActor()->GetActorNameOrLabel());
+	checkf(CachedPawnUIInterface.IsValid(), TEXT("%s didn't implement IPawnUIInterface"), *Data.Target.GetAvatarActor()->GetActorNameOrLabel());
 	
 	UPawnUIComponent* PawnUIComponent = CachedPawnUIInterface->GetPawnUIComponent();
 	checkf(PawnUIComponent, TEXT("Couldn't extract a PawnUIComponent from %s"), *Data.Target.GetAvatarActor()->GetActorNameOrLabel())
@@ -43,6 +43,20 @@ void UWBAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallback
 	if (Data.EvaluatedData.Attribute == GetRageAttribute())
 	{
 		SetRage(FMath::Clamp(GetRage(), 0.f, GetMaxRage()));
+
+		if (GetRage() == GetMaxRage())
+		{
+			UWBFunctionLibrary::AddGameplayTagToActor(Data.Target.GetAvatarActor(), WBGameplayTags::Player_Status_Rage_Full);
+		}
+		else if (GetRage() <= 0.f)
+		{
+			UWBFunctionLibrary::AddGameplayTagToActor(Data.Target.GetAvatarActor(), WBGameplayTags::Player_Status_Rage_None);
+		}
+		else
+		{
+			UWBFunctionLibrary::RemoveGameplayTagFromActor(Data.Target.GetAvatarActor(), WBGameplayTags::Player_Status_Rage_Full);
+			UWBFunctionLibrary::RemoveGameplayTagFromActor(Data.Target.GetAvatarActor(), WBGameplayTags::Player_Status_Rage_None);
+		}
 
 		if (UHeroUIComponent* HeroUIComponent = CachedPawnUIInterface->GetHeroUIComponent())
 		{
