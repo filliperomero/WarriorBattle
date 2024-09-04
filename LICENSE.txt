@@ -1,0 +1,17 @@
+All licenses in this repository are copyrighted by Fillipe Romero.
+
+All code should only be used for informational purposes
+
+------------------------------------------------------------------------------
+
+Informational Purposes Only
+
+Fillipe Romero is the author of the work and reserves all rights to the work worldwide under
+copyright law, including all related and neighboring rights,
+to the extent allowed by law.
+
+The code under this repo can only be used for informational purposes and not for commercial use of any kind.
+
+Other Information:
+
+    * The code was made following a tutorial from Vince Petrelli (https://github.com/vinceright3). Any commercial use need to be approved by him.
