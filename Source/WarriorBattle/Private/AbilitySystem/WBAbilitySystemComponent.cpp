@@ -37,11 +37,23 @@ void UWBAbilitySystemComponent::OnAbilityInputReleased(const FGameplayTag& InInp
 	}
 }
 
-void UWBAbilitySystemComponent::GrantHeroWeaponAbilities(const TArray<FWBHeroAbilitySet>& InDefaultWeaponAbilities, int32 ApplyLevel, TArray<FGameplayAbilitySpecHandle>& OutGrantedAbilitySpecHandles)
+void UWBAbilitySystemComponent::GrantHeroWeaponAbilities(const TArray<FWBHeroAbilitySet>& InDefaultWeaponAbilities, const TArray<FWBHeroSpecialAbilitySet>& InSpecialWeaponAbilities, int32 ApplyLevel, TArray<FGameplayAbilitySpecHandle>& OutGrantedAbilitySpecHandles)
 {
 	if (InDefaultWeaponAbilities.IsEmpty()) return;
 
-	for (const auto& AbilitySet : InDefaultWeaponAbilities)
+	for (const FWBHeroAbilitySet& AbilitySet : InDefaultWeaponAbilities)
+	{
+		if (!AbilitySet.IsValid()) continue;
+
+		FGameplayAbilitySpec AbilitySpec(AbilitySet.AbilityToGrant);
+		AbilitySpec.SourceObject = GetAvatarActor();
+		AbilitySpec.Level = ApplyLevel;
+		AbilitySpec.DynamicAbilityTags.AddTag(AbilitySet.InputTag);
+		
+		OutGrantedAbilitySpecHandles.AddUnique(GiveAbility(AbilitySpec));
+	}
+
+	for (const FWBHeroSpecialAbilitySet& AbilitySet : InSpecialWeaponAbilities)
 	{
 		if (!AbilitySet.IsValid()) continue;
 
