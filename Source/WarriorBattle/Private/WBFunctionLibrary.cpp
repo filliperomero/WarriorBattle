@@ -8,6 +8,7 @@
 #include "GenericTeamAgentInterface.h"
 #include "WBGameplayTags.h"
 #include "Kismet/KismetMathLibrary.h"
+#include "Types/WBCountDownAction.h"
 
 UWBAbilitySystemComponent* UWBFunctionLibrary::NativeGetWBASCFromActor(AActor* InActor)
 {
@@ -144,4 +145,39 @@ bool UWBFunctionLibrary::ApplyGameplayEffectSpecHandleToTargetActor(AActor* InIn
 	const FActiveGameplayEffectHandle ActiveGameplayEffectHandle = SourceASC->ApplyGameplayEffectSpecToTarget(*InSpecHandle.Data, TargetASC);
 
 	return ActiveGameplayEffectHandle.WasSuccessfullyApplied();
+}
+
+void UWBFunctionLibrary::CountDown(const UObject* WorldContextObject, float TotalTime, float UpdateInterval,
+	float& OutRemainingTime, EWBCountDownActionInput CountDownInput, EWBCountDownActionOutput& CountDownOutput,
+	FLatentActionInfo LatentInfo)
+{
+	UWorld* World = nullptr;
+
+	if (GEngine)
+	{
+		World = GEngine->GetWorldFromContextObject(WorldContextObject, EGetWorldErrorMode::LogAndReturnNull);
+	}
+
+	if (!World) return;
+
+	FLatentActionManager& LatentActionManager = World->GetLatentActionManager();
+
+	FWBCountDownAction* FoundAction = LatentActionManager.FindExistingAction<FWBCountDownAction>(LatentInfo.CallbackTarget, LatentInfo.UUID);
+	
+	if (CountDownInput == EWBCountDownActionInput::Start)
+	{
+		if (!FoundAction)
+		{
+			// The LatentActionManger should be dealing with the "new". It should manage the memory properly and don't cause any leak
+			LatentActionManager.AddNewAction(LatentInfo.CallbackTarget, LatentInfo.UUID, new FWBCountDownAction(TotalTime, UpdateInterval, OutRemainingTime, CountDownOutput, LatentInfo));
+		}
+	}
+
+	if (CountDownInput == EWBCountDownActionInput::Cancel)
+	{
+		if (FoundAction)
+		{
+			FoundAction->CancelAction();
+		}
+	}
 }

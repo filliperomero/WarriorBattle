@@ -26,3 +26,18 @@ enum class EWBSuccessType : uint8
 	Failed
 };
 
+UENUM()
+enum class EWBCountDownActionInput : uint8
+{
+	Start,
+	Cancel
+};
+
+UENUM()
+enum class EWBCountDownActionOutput : uint8
+{
+	Updated,
+	Completed,
+	Canceled
+};
+
