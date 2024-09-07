@@ -54,3 +54,20 @@ FGameplayEffectSpecHandle UWBHeroGameplayAbility::MakeHeroDamageEffectSpecHandle
 
 	return EffectSpecHandle;
 }
+
+bool UWBHeroGameplayAbility::GetAbilityRemainingCooldownByTag(const FGameplayTag InCooldownTag, float& OutTotalCooldownTime, float& OutRemainingCooldownTime)
+{
+	check(InCooldownTag.IsValid());
+
+	const FGameplayEffectQuery CooldownQuery = FGameplayEffectQuery::MakeQuery_MatchAnyOwningTags(InCooldownTag.GetSingleTagContainer());
+	TArray<TTuple<float, float>> TimeRemainingAndDuration = GetAbilitySystemComponentFromActorInfo()->GetActiveEffectsTimeRemainingAndDuration(CooldownQuery);
+
+	if (!TimeRemainingAndDuration.IsEmpty())
+	{
+		// Should have only one element inside it since we're using specific tags
+		OutRemainingCooldownTime = TimeRemainingAndDuration[0].Key;
+		OutTotalCooldownTime = TimeRemainingAndDuration[0].Value;
+	}
+
+	return OutRemainingCooldownTime > 0.f;
+}

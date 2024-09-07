@@ -27,6 +27,9 @@ public:
 
 	UFUNCTION(BlueprintPure, Category = "WarriorBattle|Ability")
 	FGameplayEffectSpecHandle MakeHeroDamageEffectSpecHandle(TSubclassOf<UGameplayEffect> EffectClass, float InWeaponBaseDamage, FGameplayTag InCurrentAttackTypeTag, int32 InUsedComboCount);
+	
+	UFUNCTION(BlueprintCallable, Category = "WarriorBattle|Ability")
+	bool GetAbilityRemainingCooldownByTag(const FGameplayTag InCooldownTag, float& OutTotalCooldownTime, float& OutRemainingCooldownTime);
 
 private:
 	TWeakObjectPtr<AWBHeroCharacter> CachedHeroCharacter;
