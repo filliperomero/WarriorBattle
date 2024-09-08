@@ -10,6 +10,7 @@
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnEquippedWeaponChangedSignature, TSoftObjectPtr<UTexture2D>, SoftWeaponIcon);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnAbilityIconSlotUpdatedSignature, FGameplayTag, AbilityInputTag, TSoftObjectPtr<UMaterialInterface>, SoftAbilityIconMaterial);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FOnAbilityCooldownBeginSignature, FGameplayTag, AbilityInputTag, float, TotalCooldownTime, float, RemainingCooldownTime);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnStoneInteractedSignature, bool, bShouldDisplayIconInputKey);
 
 UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
 class WARRIORBATTLE_API UHeroUIComponent : public UPawnUIComponent
@@ -28,4 +29,7 @@ public:
 
 	UPROPERTY(BlueprintCallable, BlueprintAssignable)
 	FOnAbilityCooldownBeginSignature OnAbilityCooldownBeginDelegate;
+
+	UPROPERTY(BlueprintCallable, BlueprintAssignable)
+	FOnStoneInteractedSignature OnStoneInteractedDelegate;
 };

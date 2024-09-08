@@ -3,16 +3,27 @@
 #include "AbilitySystem/Ability/WBHeroPickupStones.h"
 
 #include "Character/WBHeroCharacter.h"
+#include "Component/UI/HeroUIComponent.h"
 #include "Item/Pickup/WBStonePickupBase.h"
 #include "Kismet/KismetSystemLibrary.h"
 
 void UWBHeroPickupStones::ActivateAbility(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo, const FGameplayEventData* TriggerEventData)
 {
+	if (GetHeroUIComponentFromActorInfo())
+	{
+		GetHeroUIComponentFromActorInfo()->OnStoneInteractedDelegate.Broadcast(true);
+	}
+	
 	Super::ActivateAbility(Handle, ActorInfo, ActivationInfo, TriggerEventData);
 }
 
 void UWBHeroPickupStones::EndAbility(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo, bool bReplicateEndAbility, bool bWasCancelled)
 {
+	if (GetHeroUIComponentFromActorInfo())
+	{
+		GetHeroUIComponentFromActorInfo()->OnStoneInteractedDelegate.Broadcast(false);
+	}
+	
 	Super::EndAbility(Handle, ActorInfo, ActivationInfo, bReplicateEndAbility, bWasCancelled);
 }
 

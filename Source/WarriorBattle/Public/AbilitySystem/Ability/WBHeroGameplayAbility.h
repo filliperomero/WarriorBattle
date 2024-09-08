@@ -6,6 +6,7 @@
 #include "WBGameplayAbility.h"
 #include "WBHeroGameplayAbility.generated.h"
 
+class UHeroUIComponent;
 class UHeroCombatComponent;
 class AWBHeroController;
 class AWBHeroCharacter;
@@ -24,6 +25,9 @@ public:
 	
 	UFUNCTION(BlueprintPure, Category = "WarriorBattle|Ability")
 	UHeroCombatComponent* GetHeroCombatComponentFromActorInfo();
+
+	UFUNCTION(BlueprintPure, Category = "WarriorBattle|Ability")
+	UHeroUIComponent* GetHeroUIComponentFromActorInfo();
 
 	UFUNCTION(BlueprintPure, Category = "WarriorBattle|Ability")
 	FGameplayEffectSpecHandle MakeHeroDamageEffectSpecHandle(TSubclassOf<UGameplayEffect> EffectClass, float InWeaponBaseDamage, FGameplayTag InCurrentAttackTypeTag, int32 InUsedComboCount);
