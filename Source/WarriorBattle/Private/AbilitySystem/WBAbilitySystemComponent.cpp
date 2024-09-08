@@ -80,7 +80,7 @@ void UWBAbilitySystemComponent::RemoveGrantedHeroWeaponAbilities(TArray<FGamepla
 	InSpecHandlesToRemove.Empty();
 }
 
-bool UWBAbilitySystemComponent::TryActivateAbilityByTag(const FGameplayTag& AbilityTagToActivate)
+bool UWBAbilitySystemComponent::TryActivateAbilityByTag(FGameplayTag AbilityTagToActivate)
 {
 	check(AbilityTagToActivate.IsValid());
 
