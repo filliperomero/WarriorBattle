@@ -74,6 +74,8 @@ void AWBHeroCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 
 		InputComp->BindNativeInputAction(InputConfigDataAsset, WBGameplayTags::InputTag_SwitchTarget, ETriggerEvent::Triggered, this, &ThisClass::Input_SwitchTargetTriggered);
 		InputComp->BindNativeInputAction(InputConfigDataAsset, WBGameplayTags::InputTag_SwitchTarget, ETriggerEvent::Completed, this, &ThisClass::Input_SwitchTargetCompleted);
+		
+		InputComp->BindNativeInputAction(InputConfigDataAsset, WBGameplayTags::InputTag_Pickup_Stones, ETriggerEvent::Started, this, &ThisClass::Input_PickupStonesStarted);
 
 		InputComp->BindAbilityInputAction(InputConfigDataAsset, this, &ThisClass::Input_AbilityInputPressed, &ThisClass::Input_AbilityInputReleased);
 	}
@@ -131,6 +133,11 @@ void AWBHeroCharacter::Input_SwitchTargetTriggered(const FInputActionValue& Inpu
 
 void AWBHeroCharacter::Input_SwitchTargetCompleted(const FInputActionValue& InputActionValue)
 {
+}
+
+void AWBHeroCharacter::Input_PickupStonesStarted(const FInputActionValue& InputActionValue)
+{
+	UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(this, WBGameplayTags::Player_Event_ConsumeStones, FGameplayEventData());
 }
 
 void AWBHeroCharacter::Input_AbilityInputPressed(FGameplayTag InInputTag)
