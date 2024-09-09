@@ -2,3 +2,8 @@
 
 #include "Game/WBGameMode.h"
 
+AWBGameMode::AWBGameMode()
+{
+    PrimaryActorTick.bCanEverTick = true;
+    PrimaryActorTick.bStartWithTickEnabled = true;
+}

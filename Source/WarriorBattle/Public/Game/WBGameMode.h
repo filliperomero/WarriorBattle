@@ -11,4 +11,7 @@ class WARRIORBATTLE_API AWBGameMode : public AGameModeBase
 {
 	GENERATED_BODY()
 	
+public:
+	AWBGameMode();
+	
 };
