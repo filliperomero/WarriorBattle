@@ -193,3 +193,18 @@ void AWBSurvivalGameMode::OnEnemyDestroyed(AActor* DestroyedActor)
 		SetCurrentSurvivalGameModeState(EWBSurvivalGameModeState::WaveCompleted);
 	}
 }
+
+void AWBSurvivalGameMode::RegisterSpawnedEnemies(const TArray<AWBEnemyCharacter*>& InEnemiesToRegister)
+{
+	if (InEnemiesToRegister.IsEmpty()) return;
+
+	for (const auto& SpawnedEnemy : InEnemiesToRegister)
+	{
+		if (IsValid(SpawnedEnemy))
+		{
+			CurrentSpawnedEnemiesCounter++;
+
+			SpawnedEnemy->OnDestroyed.AddUniqueDynamic(this, &ThisClass::OnEnemyDestroyed);
+		}
+	}
+}
