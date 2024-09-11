@@ -52,16 +52,21 @@ UCLASS()
 class WARRIORBATTLE_API AWBSurvivalGameMode : public AWBGameMode
 {
 	GENERATED_BODY()
-
+	
 protected:
 	virtual void BeginPlay() override;
-	virtual void Tick(float DeltaSeconds) override;
+	virtual void Tick(float DeltaSeconds) override;	
 
 private:
 	void SetCurrentSurvivalGameModeState(EWBSurvivalGameModeState NewState);
 	bool HasFinishedAllWaves() const;
 	void PreLoadNextWaveEnemies();
-	FWBEnemyWaveSpawnerTableRow* GetCurrentWaveSpawnerTableRow() const;  
+	FWBEnemyWaveSpawnerTableRow* GetCurrentWaveSpawnerTableRow() const;
+	int32 TrySpawnWaveEnemies();
+	bool ShouldKeepSpawningEnemies() const;
+
+	UFUNCTION()
+	void OnEnemyDestroyed(AActor* DestroyedActor);
 	
 	UPROPERTY()
 	EWBSurvivalGameModeState CurrentSurvivalGameModeState;
@@ -77,6 +82,15 @@ private:
 
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = "Wave Definition", meta=(AllowPrivateAccess="true"))
 	int32 CurrentWaveCount = 1;
+
+	UPROPERTY()
+	int32 CurrentSpawnedEnemiesCounter = 0;
+
+	UPROPERTY()
+	int32 TotalSpawnedEnemiesThisWaveCounter = 0;
+	
+	UPROPERTY()
+    TArray<AActor*> TargetPointsArray;
 
 	UPROPERTY()
 	float TimePassedSinceStart = 0.f;
