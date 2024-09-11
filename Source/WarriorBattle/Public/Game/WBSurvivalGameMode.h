@@ -98,7 +98,7 @@ private:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Wave Definition", meta=(AllowPrivateAccess="true"))
 	float SpawnNewWaveWaitTime = 5.f;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Wave Definition", meta=(AllowPrivateAccess="true"))
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Wave Definition", meta=(AllowPrivateAccess="true"))
 	float SpawnEnemiesDelayTime = 2.f;
 	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Wave Definition", meta=(AllowPrivateAccess="true"))
