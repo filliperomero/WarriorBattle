@@ -13,6 +13,7 @@
 #include "Components/CapsuleComponent.h"
 #include "DataAsset/Input/DataAsset_InputConfig.h"
 #include "DataAsset/StartUpData/DataAsset_BaseStartUpData.h"
+#include "Game/WBGameMode.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 
@@ -95,7 +96,26 @@ void AWBHeroCharacter::PossessedBy(AController* NewController)
 	{
 		if (UDataAsset_BaseStartUpData* LoadedData = CharacterStartUpData.LoadSynchronous())
 		{
-			LoadedData->GiveToAbilitySystemComponent(WBAbilitySystemComponent);
+			int32 AbilityApplyLevel = 1;
+			
+			if (AWBGameMode* GameMode = GetWorld()->GetAuthGameMode<AWBGameMode>())
+			{
+				switch (GameMode->GetCurrentGameDifficulty()) {
+				case EGameDifficulty::Easy:
+					AbilityApplyLevel = 4;
+					break;
+				case EGameDifficulty::Normal:
+					AbilityApplyLevel = 3;
+					break;
+				case EGameDifficulty::Hard:
+					AbilityApplyLevel = 2;
+					break;
+				case EGameDifficulty::VeryHard:
+					AbilityApplyLevel = 1;
+					break;
+				}
+			}
+			LoadedData->GiveToAbilitySystemComponent(WBAbilitySystemComponent, AbilityApplyLevel);
 		}
 	}
 }

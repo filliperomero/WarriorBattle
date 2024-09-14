@@ -41,3 +41,11 @@ enum class EWBCountDownActionOutput : uint8
 	Canceled
 };
 
+UENUM(BlueprintType)
+enum class EGameDifficulty : uint8
+{
+	Easy,
+	Normal,
+	Hard,
+	VeryHard
+};

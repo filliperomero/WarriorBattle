@@ -10,6 +10,7 @@
 #include "DataAsset/StartUpData/DataAsset_EnemyStartUpData.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Engine/AssetManager.h"
+#include "Game/WBGameMode.h"
 #include "UI/Widget/WBUserWidgetBase.h"
 
 AWBEnemyCharacter::AWBEnemyCharacter()
@@ -109,15 +110,35 @@ void AWBEnemyCharacter::OnBodyCollisionBoxBeginOverlap(UPrimitiveComponent* Over
 void AWBEnemyCharacter::InitEnemyStartupData()
 {
 	if (CharacterStartUpData.IsNull()) return;
+	
+	int32 AbilityApplyLevel = 1;
+			
+	if (AWBGameMode* GameMode = GetWorld()->GetAuthGameMode<AWBGameMode>())
+	{
+		switch (GameMode->GetCurrentGameDifficulty()) {
+		case EGameDifficulty::Easy:
+			AbilityApplyLevel = 1;
+			break;
+		case EGameDifficulty::Normal:
+			AbilityApplyLevel = 2;
+			break;
+		case EGameDifficulty::Hard:
+			AbilityApplyLevel = 3;
+			break;
+		case EGameDifficulty::VeryHard:
+			AbilityApplyLevel = 4;
+			break;
+		}
+	}
 
 	UAssetManager::GetStreamableManager().RequestAsyncLoad(
 		CharacterStartUpData.ToSoftObjectPath(),
 		FStreamableDelegate::CreateLambda(
-			[this]()
+			[AbilityApplyLevel, this]()
 			{
 				if (UDataAsset_BaseStartUpData* LoadedData = CharacterStartUpData.Get())
 				{
-					LoadedData->GiveToAbilitySystemComponent(WBAbilitySystemComponent);
+					LoadedData->GiveToAbilitySystemComponent(WBAbilitySystemComponent, AbilityApplyLevel);
 				}
 			}
 		)
