@@ -108,4 +108,8 @@ namespace WBGameplayTags
 	WARRIORBATTLE_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(GameplayCue_Effects_MagicShield_PerfectBlock)
 	WARRIORBATTLE_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(GameplayCue_Effects_UnblockableWarning)
 	WARRIORBATTLE_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(GameplayCue_Effects_Rage_Activating)
+
+	/** Game Data Tags */
+	WARRIORBATTLE_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(GameData_Level_SurvivalGameModeMap)
+	WARRIORBATTLE_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(GameData_Level_MainMenuMap)
 }

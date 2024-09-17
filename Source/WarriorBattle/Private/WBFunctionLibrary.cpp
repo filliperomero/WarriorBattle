@@ -7,6 +7,7 @@
 #include "Interface/PawnCombatInterface.h"
 #include "GenericTeamAgentInterface.h"
 #include "WBGameplayTags.h"
+#include "Game/WBGameInstance.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "Types/WBCountDownAction.h"
 
@@ -180,4 +181,47 @@ void UWBFunctionLibrary::CountDown(const UObject* WorldContextObject, float Tota
 			FoundAction->CancelAction();
 		}
 	}
+}
+
+UWBGameInstance* UWBFunctionLibrary::GetWBGameInstance(const UObject* WorldContextObject)
+{
+	if (GEngine)
+	{
+		if (const UWorld* World = GEngine->GetWorldFromContextObject(WorldContextObject, EGetWorldErrorMode::LogAndReturnNull))
+		{
+			return World->GetGameInstance<UWBGameInstance>();
+		}
+	}
+
+	return nullptr;
+}
+
+void UWBFunctionLibrary::ToggleInputMode(const UObject* WorldContextObject, EWBInputMode InInputMode)
+{
+	APlayerController* PlayerController = nullptr;
+	
+	if (GEngine)
+    {
+        if (UWorld* World = GEngine->GetWorldFromContextObject(WorldContextObject, EGetWorldErrorMode::LogAndReturnNull))
+        {
+            PlayerController = World->GetFirstPlayerController();
+        }
+    }
+    
+    if (!IsValid(PlayerController)) return;
+    
+    FInputModeGameOnly GameOnlyMode;
+    FInputModeUIOnly UIOnlyMode;
+    
+    switch (InInputMode)
+    {
+    case EWBInputMode::GameOnly:
+        PlayerController->SetInputMode(GameOnlyMode);
+        PlayerController->bShowMouseCursor = false;
+        break;
+    case EWBInputMode::UIOnly:
+        PlayerController->SetInputMode(UIOnlyMode);
+        PlayerController->bShowMouseCursor = true;
+        break;
+    }
 }

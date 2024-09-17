@@ -8,6 +8,7 @@
 #include "Types/WBEnumTypes.h"
 #include "WBFunctionLibrary.generated.h"
 
+class UWBGameInstance;
 struct FGameplayEffectSpecHandle;
 struct FScalableFloat;
 class UPawnCombatComponent;
@@ -55,5 +56,11 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category="WarriorBattle|FunctionLibrary", meta=(Latent, WorldContext = "WorldContextObject", LatentInfo="LatentInfo", ExpandEnumAsExecs="CountDownInput|CountDownOutput", TotalTime="1.0", UpdateInterval="0.1"))
 	static void CountDown(const UObject* WorldContextObject, float TotalTime, float UpdateInterval, float& OutRemainingTime, EWBCountDownActionInput CountDownInput, UPARAM(DisplayName="Output") EWBCountDownActionOutput& CountDownOutput, FLatentActionInfo LatentInfo);
+
+	UFUNCTION(BlueprintPure, Category="WarriorBattle|FunctionLibrary", meta=(WorldContext = "WorldContextObject"))
+	static UWBGameInstance* GetWBGameInstance(const UObject* WorldContextObject);
+	
+	UFUNCTION(BlueprintCallable, Category="WarriorBattle|FunctionLibrary", meta=(WorldContext = "WorldContextObject"))
+	static void ToggleInputMode(const UObject* WorldContextObject, EWBInputMode InInputMode);
 };
  

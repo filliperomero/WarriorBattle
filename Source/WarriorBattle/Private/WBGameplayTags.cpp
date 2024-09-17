@@ -105,4 +105,8 @@ namespace WBGameplayTags
 	UE_DEFINE_GAMEPLAY_TAG(GameplayCue_Effects_MagicShield_PerfectBlock, "GameplayCue.Effects.MagicShield.PerfectBlock");
 	UE_DEFINE_GAMEPLAY_TAG(GameplayCue_Effects_UnblockableWarning, "GameplayCue.Effects.UnblockableWarning");
 	UE_DEFINE_GAMEPLAY_TAG(GameplayCue_Effects_Rage_Activating, "GameplayCue.Effects.Rage.Activating");
+
+	/** Game Data Tags */
+	UE_DEFINE_GAMEPLAY_TAG(GameData_Level_SurvivalGameModeMap, "GameData.Level.SurvivalGameModeMap");
+	UE_DEFINE_GAMEPLAY_TAG(GameData_Level_MainMenuMap, "GameData.Level.MainMenuMap");
 }
