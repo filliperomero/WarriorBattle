@@ -3,10 +3,23 @@
 #include "Game/WBSurvivalGameMode.h"
 
 #include "NavigationSystem.h"
+#include "WBFunctionLibrary.h"
 #include "Character/WBEnemyCharacter.h"
 #include "Engine/AssetManager.h"
 #include "Engine/TargetPoint.h"
 #include "Kismet/GameplayStatics.h"
+
+void AWBSurvivalGameMode::InitGame(const FString& MapName, const FString& Options, FString& ErrorMessage)
+{
+	Super::InitGame(MapName, Options, ErrorMessage);
+
+	EGameDifficulty GameDifficulty;
+	
+	if (UWBFunctionLibrary::TryLoadSavedGameDifficulty(GameDifficulty))
+	{
+		CurrentGameDifficulty = GameDifficulty;
+	}
+}
 
 void AWBSurvivalGameMode::BeginPlay()
 {
