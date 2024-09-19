@@ -29,9 +29,18 @@ class WARRIORBATTLE_API UWBGameInstance : public UGameInstance
 {
 	GENERATED_BODY()
 
+public:
+	virtual void Init() override;
+
 protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	TArray<FWBGameLevelSet> GameLevelSets;
+
+	UFUNCTION()
+	virtual void OnPreLoadMap(const FString& MapName);
+
+	UFUNCTION()
+	virtual void OnDestinationWorldLoaded(UWorld* LoadedWorld);
 
 public:
 	UFUNCTION(BlueprintPure, meta=(GameplayTagFilter="GameData.Level"))
