@@ -8,7 +8,9 @@
 #include "GenericTeamAgentInterface.h"
 #include "WBGameplayTags.h"
 #include "Game/WBGameInstance.h"
+#include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetMathLibrary.h"
+#include "SaveGame/WBSaveGame.h"
 #include "Types/WBCountDownAction.h"
 
 UWBAbilitySystemComponent* UWBFunctionLibrary::NativeGetWBASCFromActor(AActor* InActor)
@@ -224,4 +226,33 @@ void UWBFunctionLibrary::ToggleInputMode(const UObject* WorldContextObject, EWBI
         PlayerController->bShowMouseCursor = true;
         break;
     }
+}
+
+void UWBFunctionLibrary::SaveCurrentGameDifficulty(EGameDifficulty InDifficultyToSave)
+{
+	USaveGame* SaveGameObject = UGameplayStatics::CreateSaveGameObject(UWBSaveGame::StaticClass());
+
+	if (UWBSaveGame* WBSaveGameObject = Cast<UWBSaveGame>(SaveGameObject))
+	{
+		WBSaveGameObject->SavedCurrentGameDifficulty = InDifficultyToSave;
+
+		const bool bWasSaved = UGameplayStatics::SaveGameToSlot(WBSaveGameObject, WBGameplayTags::GameData_SaveGame_Slot_1.GetTag().ToString(), 0);
+	}
+}
+
+bool UWBFunctionLibrary::TryLoadSavedGameDifficulty(EGameDifficulty& OutSavedDifficulty)
+{
+	if (UGameplayStatics::DoesSaveGameExist(WBGameplayTags::GameData_SaveGame_Slot_1.GetTag().ToString(), 0))
+	{
+		USaveGame* SaveGameObject = UGameplayStatics::LoadGameFromSlot(WBGameplayTags::GameData_SaveGame_Slot_1.GetTag().ToString(), 0);
+
+		if (UWBSaveGame* WBSaveGameObject = Cast<UWBSaveGame>(SaveGameObject))
+		{
+			OutSavedDifficulty = WBSaveGameObject->SavedCurrentGameDifficulty;
+
+			return true;
+		}
+	}
+
+	return false;
 }
